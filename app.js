@@ -101,6 +101,11 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("listing/error.ejs", { err })
   // res.status(statusCode).send(message);
 });
+app.use((req, res, next) => {
+  res.locals.curruser = req.user; // Makes `curruser` available globally in EJS
+  next();
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

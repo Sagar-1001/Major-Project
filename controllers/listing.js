@@ -59,9 +59,7 @@ module.exports.showListing = async (req, res) => {
     .populate("owner")
     .populate({
       path: "reviews",
-      populate: {
-        path: "author",
-      },
+      populate: { path: "author" },
     });
 
   if (!listing) {
@@ -69,8 +67,12 @@ module.exports.showListing = async (req, res) => {
     return res.redirect("/listing");
   }
 
-  res.render("listing/show", { listing, curruser: req.user }); // Pass curruser explicitly
+  console.log("Current User:", req.user); // Debugging
+  console.log("Listing Owner:", listing.owner); // Debugging
+
+  res.render("listing/show", { listing, curruser: req.user });
 };
+
 
 
 module.exports.destrotListing = async (req, res) => {
