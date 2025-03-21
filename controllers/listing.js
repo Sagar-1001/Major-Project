@@ -55,18 +55,23 @@ module.exports.EditListing = async (req, res) => {
 
 module.exports.showListing = async (req, res) => {
   let { id } = req.params;
-  const listing = await Listing.findById(id).populate('owner').populate({
-    path: "reviews",
-    populate: {
-      path: "author",
-    },
-  });
+  const listing = await Listing.findById(id)
+    .populate("owner")
+    .populate({
+      path: "reviews",
+      populate: {
+        path: "author",
+      },
+    });
+
   if (!listing) {
-    req.flash("error", "listing you requested for does not exist");
-    res.redirect("/listing");
+    req.flash("error", "The listing you requested does not exist.");
+    return res.redirect("/listing");
   }
-  res.render("listing/show", { listing });
+
+  res.render("listing/show", { listing, curruser: req.user }); // Pass curruser explicitly
 };
+
 
 module.exports.destrotListing = async (req, res) => {
   let { id } = req.params;
