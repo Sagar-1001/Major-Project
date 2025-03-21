@@ -26,5 +26,5 @@ const addDB = async () => {
   console.log("Records Initialized");
 };
 
-// addDB();
+addDB();
 // initDB();
